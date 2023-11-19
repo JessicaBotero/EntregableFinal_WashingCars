@@ -33,6 +33,7 @@ namespace EntregableFinal_WashingCars.DAL.Entities
         public int PhoneNumber { get; set; }
 
 
+
         [Display(Name = "Foto")]
         public Guid ImageId { get; set; }
 
