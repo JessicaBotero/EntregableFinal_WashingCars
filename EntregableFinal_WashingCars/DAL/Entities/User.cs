@@ -48,7 +48,7 @@ namespace EntregableFinal_WashingCars.DAL.Entities
         public UserType UserType { get; set; }
 
 
-        //Propiedades de Lectura --- No se muestran en base de datos por que son solo lectura
+        //Propiedades de Lectura - No se muestran en base de datos por que son solo lectura
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
