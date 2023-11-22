@@ -13,6 +13,12 @@ namespace EntregableFinal_WashingCars.DAL
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Services>().HasIndex(t => t.ServicesId).IsUnique();
+        }
+
         public DbSet<Services> Services { get; set; }
 
         public DbSet<Vehicles> Vehicles { get; set; }
