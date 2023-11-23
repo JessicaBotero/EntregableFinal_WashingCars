@@ -1,4 +1,5 @@
 ﻿using EntregableFinal_WashingCars.DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -6,7 +7,7 @@ using System.Reflection.Emit;
 
 namespace EntregableFinal_WashingCars.DAL
 {
-    public class DataBaseContext : DbContext
+    public class DataBaseContext : IdentityDbContext<User>
     {
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
