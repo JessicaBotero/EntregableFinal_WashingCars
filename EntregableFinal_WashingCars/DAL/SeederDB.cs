@@ -16,25 +16,31 @@ namespace EntregableFinal_WashingCars.DAL
         {
             await _context.Database.EnsureCreatedAsync();//Método propio de EF, metodo para crear la BD apenas mi API se ejecute
 
+            PopulateServicesAsync();
+
             await _context.SaveChangesAsync();
         }
 
-        #region Private Methods
-        public static void PopulateServices(ModelBuilder modelBuilder)
+        private async Task PopulateServicesAsync()
         {
+            if (!_context.Services.Any())
             {
-                modelBuilder.Entity<Services>().HasData(
-                new Services { Id = new Guid(), Name = "Lavada simple", Price = 25000 },
-                new Services { Id = new Guid(), Name = "Lavada + Polishada", Price = 50000 },
-                new Services { Id = new Guid(), Name = "Lavada + Aspirada de Cojinería", Price = 30000 },
-                new Services { Id = new Guid(), Name = "Lavada Full", Price = 65000 },
-                new Services { Id = new Guid(), Name = "Lavada en seco del Motor", Price = 80000 },
-                new Services { Id = new Guid(), Name = "Lavada Chasis", Price = 90000 }
-                );
+                await AddServiceIfNotExistsAsync("Lavada simple", "25.000");
+                await AddServiceIfNotExistsAsync("Lavada + Polishada", "50.000");
+                await AddServiceIfNotExistsAsync("Lavada + Aspirada de Cojinería", "30.000");
+                await AddServiceIfNotExistsAsync("Lavada Full", "65.000");
+                await AddServiceIfNotExistsAsync("Lavada en seco del Motor", "80.000");
+                await AddServiceIfNotExistsAsync("Lavada Chasis", "90.000");
             }
         }
 
-        #endregion
-
+        private async Task AddServiceIfNotExistsAsync(string serviceName, string price)
+        {
+            if (!_context.Services.Any(s => s.Name == serviceName && s.Price == price))
+            {
+                _context.Services.Add(new Entities.Service { Name = serviceName, Price = price });
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

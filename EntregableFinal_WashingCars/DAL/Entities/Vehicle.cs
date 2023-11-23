@@ -2,7 +2,7 @@
 
 namespace EntregableFinal_WashingCars.DAL.Entities
 {
-    public class Vehicles : Entity
+    public class Vehicle : Entity
     {
         [Key]
         [Required]

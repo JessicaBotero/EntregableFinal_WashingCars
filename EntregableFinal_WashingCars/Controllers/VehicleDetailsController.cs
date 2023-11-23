@@ -56,7 +56,7 @@ namespace EntregableFinal_WashingCars.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VehiculeId,CreationDate,DeliveryDate,Id,CreatedDate,ModifiedDate")] VehicleDetails vehicleDetails)
+        public async Task<IActionResult> Create([Bind("VehiculeId,CreationDate,DeliveryDate,Id,CreatedDate,ModifiedDate")] VehicleDetail vehicleDetails)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace EntregableFinal_WashingCars.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid? id, [Bind("VehiculeId,CreationDate,DeliveryDate,Id,CreatedDate,ModifiedDate")] VehicleDetails vehicleDetails)
+        public async Task<IActionResult> Edit(Guid? id, [Bind("VehiculeId,CreationDate,DeliveryDate,Id,CreatedDate,ModifiedDate")] VehicleDetail vehicleDetails)
         {
             if (id != vehicleDetails.VehiculeId)
             {

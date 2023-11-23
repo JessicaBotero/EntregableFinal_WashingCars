@@ -2,17 +2,15 @@
 
 namespace EntregableFinal_WashingCars.DAL.Entities
 {
-    public class Services : Entity
+    public class Service : Entity
     {
-        [Display(Name = "Ingrese su Ticket")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int ServicesId { get; set; }
 
         [Required]
         public String Name { get; set; }
 
         [Required]
-        public float Price { get; set; }
+        public String Price { get; set; }
 
     }
 }
