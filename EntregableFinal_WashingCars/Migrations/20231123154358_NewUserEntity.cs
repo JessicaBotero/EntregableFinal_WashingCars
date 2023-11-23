@@ -154,6 +154,7 @@ namespace EntregableFinal_WashingCars.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
