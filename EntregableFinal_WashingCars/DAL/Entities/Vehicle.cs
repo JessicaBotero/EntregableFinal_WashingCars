@@ -15,5 +15,12 @@ namespace EntregableFinal_WashingCars.DAL.Entities
         [Required]
         [Display(Name = "Número de Placa")]
         public String? NumberPlate { get; set; }
+
+
+        [Display(Name = "Usuarios")]
+        public ICollection<User> Users { get; set; }
+
     }
+
+
 }

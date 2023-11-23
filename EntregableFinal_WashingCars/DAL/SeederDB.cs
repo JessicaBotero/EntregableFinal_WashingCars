@@ -1,24 +1,40 @@
 ﻿using EntregableFinal_WashingCars.DAL.Entities;
+using EntregableFinal_WashingCars.Enum;
+using EntregableFinal_WashingCars.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Core.Imaging;
 
 namespace EntregableFinal_WashingCars.DAL
 {
     public class SeederDB
     {
         private readonly DataBaseContext _context;//Inyección de dependencias de la BD
+        private readonly IUserHelper _userHelper;
 
-        public SeederDB(DataBaseContext context)
+        public SeederDB(DataBaseContext context, IUserHelper userHelper)//Constructor
         {
             _context = context;
-        }//Constructor
+            _userHelper = userHelper;
+        }
 
         public async Task SeederAsync()//Metodo SeederAsync para prepoblar las tabals de BD
         {
             await _context.Database.EnsureCreatedAsync();//Método propio de EF, metodo para crear la BD apenas mi API se ejecute
 
-            PopulateServicesAsync();
+            await PopulateServicesAsync();
+            await populateUserAsync();
+            await PopulateRolesAsync();
+            await PopulateUserAsync("Steve", "Jobs", "steve_jobs_admin@yopmail.com", "3002323232", "102030", "SteveJobs.png", UserType.Admin);
+            await PopulateUserAsync("Bill", "Gates", "bill_gates_user@yopmail.com", "4005656656", "405060", "BillGates.png", UserType.Client);
 
             await _context.SaveChangesAsync();
+        }
+
+
+       
+        private Task populateUserAsync()
+        {
+            throw new NotImplementedException();
         }
 
         private async Task PopulateServicesAsync()
@@ -42,5 +58,39 @@ namespace EntregableFinal_WashingCars.DAL
                 await _context.SaveChangesAsync();
             }
         }
+
+
+        private async Task PopulateRolesAsync()
+        {
+            await _userHelper.AddRoleAsync(UserType.Admin.ToString());
+            await _userHelper.AddRoleAsync(UserType.Client.ToString());
+
+        }
+
+
+        private async Task PopulateUserAsync(string firstName, string lastName, string email, string phone, string document, string image, UserType userType)
+        {
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    CreatedDate = DateTime.Now,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
+                    Document = document,
+                    Vehicle = _context.Vehicles.FirstOrDefault(),
+                    UserType = userType,
+                    //ImageId = ImageId
+                };
+
+                await _userHelper.AddUserAsync(user, "987654");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+            }
+        }
+
     }
 }

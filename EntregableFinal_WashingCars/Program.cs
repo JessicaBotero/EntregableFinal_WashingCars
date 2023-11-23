@@ -1,4 +1,8 @@
 using EntregableFinal_WashingCars.DAL;
+using EntregableFinal_WashingCars.DAL.Entities;
+using EntregableFinal_WashingCars.Helpers;
+using EntregableFinal_WashingCars.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddTransient<SeederDB>();
+
+builder.Services.AddScoped<IUserHelper, UserHelper>();
+
+builder.Services.AddIdentity<User, IdentityRole>(io =>
+{
+    io.User.RequireUniqueEmail = true;
+    io.Password.RequireDigit = false;
+    io.Password.RequiredUniqueChars = 0;
+    io.Password.RequireLowercase = false;
+    io.Password.RequireNonAlphanumeric = false;
+    io.Password.RequireUppercase = false;
+    io.Password.RequiredLength = 6;
+}).AddEntityFrameworkStores<DataBaseContext>();
+
 
 var app = builder.Build();
 
@@ -22,7 +40,7 @@ void SeederData()
     using (IServiceScope? scope = scopedFactory.CreateScope())
     {
         SeederDB? service = scope.ServiceProvider.GetService<SeederDB>();
-        service.SeederAsync().Wait();
+        service.SeederAsync.Wait();
     }
 }
 
@@ -41,6 +59,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();//Con esto se autentica el usuario
 
 app.MapControllerRoute(
     name: "default",

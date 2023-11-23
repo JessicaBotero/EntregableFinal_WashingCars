@@ -7,6 +7,13 @@ namespace EntregableFinal_WashingCars.DAL.Entities
 {
     public class User : IdentityUser
     {
+        [Display(Name = "Fecha de creación")]
+        public  DateTime? CreatedDate { get; set; }
+
+
+        [Display(Name = "Fecha de modificación")]
+        public  DateTime? ModifiedDate { get; set; }
+
 
         [Display(Name = "Documento")]
         [MaxLength(10, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres")]
@@ -30,7 +37,7 @@ namespace EntregableFinal_WashingCars.DAL.Entities
         [Display(Name = "Número de Teléfono")]
         [MaxLength(10, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
 
 
@@ -46,6 +53,10 @@ namespace EntregableFinal_WashingCars.DAL.Entities
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
+
+
+        [Display(Name = "Vehículo")]
+        public Vehicle Vehicle { get; set; }
 
 
         //Propiedades de Lectura - No se muestran en base de datos por que son solo lectura
