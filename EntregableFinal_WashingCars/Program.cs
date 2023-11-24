@@ -27,6 +27,11 @@ builder.Services.AddIdentity<User, IdentityRole>(io =>
     io.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<DataBaseContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Unauthorized";
+    options.AccessDeniedPath = "/Account/Unauthorized";
+});
 
 var app = builder.Build();
 
@@ -40,7 +45,7 @@ void SeederData()
     using (IServiceScope? scope = scopedFactory.CreateScope())
     {
         SeederDB? service = scope.ServiceProvider.GetService<SeederDB>();
-        service.SeederAsync.Wait();
+        service.SeederAsync();
     }
 }
 
@@ -60,6 +65,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseAuthentication();//Con esto se autentica el usuario
+
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 
 app.MapControllerRoute(
     name: "default",

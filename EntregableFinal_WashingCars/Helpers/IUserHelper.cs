@@ -1,4 +1,5 @@
 ﻿using EntregableFinal_WashingCars.DAL.Entities;
+using EntregableFinal_WashingCars.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace EntregableFinal_WashingCars.Helpers
@@ -14,5 +15,9 @@ namespace EntregableFinal_WashingCars.Helpers
         Task AddUserToRoleAsync(User user, string roleName); // Relaciona la tabla User con Roles
 
         Task<bool> IsUserInRoleAsync(User user, string rolName); // Valida si el usuario ingresado esta relacionado con un rol
+
+        Task<SignInResult> LoginAsync(LoginViewModel loginViewModel);
+
+        Task LogoutAsync();
     }
 }

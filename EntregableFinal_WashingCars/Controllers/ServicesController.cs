@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EntregableFinal_WashingCars.DAL;
 using EntregableFinal_WashingCars.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EntregableFinal_WashingCars.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ServicesController : Controller
     {
         private readonly DataBaseContext _context;

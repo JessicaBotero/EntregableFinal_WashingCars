@@ -1,6 +1,7 @@
 ﻿using EntregableFinal_WashingCars.DAL;
 using EntregableFinal_WashingCars.DAL.Entities;
 using EntregableFinal_WashingCars.Helpers;
+using EntregableFinal_WashingCars.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +12,14 @@ namespace EntregableFinal_WashingCars.Services
         private readonly DataBaseContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserHelper(DataBaseContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager) //Inyección de dependencia para acceder a la BD
+        public UserHelper(DataBaseContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager) //Inyección de dependencia para acceder a la BD
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
 
@@ -54,6 +57,16 @@ namespace EntregableFinal_WashingCars.Services
         public async Task<bool> IsUserInRoleAsync(User user, string rolName)
         {
            return await _userManager.IsInRoleAsync(user, rolName);
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginViewModel loginViewModel)
+        {
+            return await _signInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, loginViewModel.RememberMe, false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
