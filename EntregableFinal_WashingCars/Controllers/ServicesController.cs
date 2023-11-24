@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EntregableFinal_WashingCars.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class ServicesController : Controller
     {
         private readonly DataBaseContext _context;

@@ -9,7 +9,7 @@ namespace EntregableFinal_WashingCars.Models
         [EmailAddress(ErrorMessage = "Debes ingresar un correo valido. ")]
         public string UserName { get; set; }
 
-        [Display(Name = "Email")]
+        [Display(Name = "Password")]
         [Required(ErrorMessage = "El campo {0} es obligatorio. ")]
         [MinLength(6, ErrorMessage = "El campo {0} debe de tener al menos {1} carácteres. ")]
         [DataType(DataType.Password)]
